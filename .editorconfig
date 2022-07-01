@@ -248,6 +248,10 @@ ij_json_spaces_within_brackets = true
 ij_json_wrap_long_lines = false
 
 [{*.markdown,*.md}]
+insert_final_newline = true
+max_line_length = 80
+ij_formatter_tags_enabled = false
+ij_wrap_on_typing = true
 ij_markdown_force_one_space_after_blockquote_symbol = true
 ij_markdown_force_one_space_after_header_symbol = true
 ij_markdown_force_one_space_after_list_bullet = true
