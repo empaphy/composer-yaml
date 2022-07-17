@@ -12,7 +12,7 @@ is generated.
 ## Installation
 
 ```bash
-composer require empaphy/composer-yaml 
+composer require "empaphy/composer-yaml:^1.0@dev"
 ```
 
 ## Usage
