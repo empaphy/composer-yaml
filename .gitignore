@@ -1,6 +1,6 @@
 /.idea
 /.vscode
-/test/vendor
+/tests/vendor
 /vendor
 
 /composer.lock
