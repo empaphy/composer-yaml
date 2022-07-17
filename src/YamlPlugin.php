@@ -34,7 +34,7 @@ class YamlPlugin implements PluginInterface
      */
     public static function getComposerYamlFilename()
     {
-        return trim(getenv('COMPOSER')) ?: './composer.yaml';
+        return trim((string) getenv('COMPOSER')) ?: './composer.yaml';
     }
 
     /**
