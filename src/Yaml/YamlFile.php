@@ -3,9 +3,11 @@
 /**
  * @copyright 2022 Alwin Garside
  * @license https://opensource.org/licenses/MIT MIT
+ *
+ * @noinspection PhpInternalEntityUsedInspection
  */
 
-namespace Yogarine\Composer\Yaml;
+namespace Empaphy\Composer\Yaml;
 
 use Composer\Downloader\TransportException;
 use Composer\IO\IOInterface;
@@ -177,12 +179,13 @@ class YamlFile
     /**
      * Validates the schema of the current json file according to composer-schema.json rules
      *
-     * @param  int                     $schema a JsonFile::*_SCHEMA constant
-     * @param  string|null             $schemaFile a path to the schema file
-     * @return bool                    true on success
+     * @param  int          $schema      a JsonFile::*_SCHEMA constant
+     * @param  string|null  $schemaFile  a path to the schema file
+     * @return bool true on success
      *
      * @throws \Composer\Json\JsonValidationException  If the data does not match the expected JSON schema.
      * @throws \RuntimeException                       If the JSON encoding fails.
+     * @throws \Seld\JsonLint\ParsingException
      */
     public function validateJsonSchema($schema = JsonFile::STRICT_SCHEMA, $schemaFile = null)
     {

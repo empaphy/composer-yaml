@@ -12,7 +12,7 @@ is generated.
 ## Installation
 
 ```bash
-composer require yogarine/composer-yaml 
+composer require empaphy/composer-yaml 
 ```
 
 ## Usage
