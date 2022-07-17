@@ -11,6 +11,7 @@ use Empaphy\Composer\Yaml\YamlFile;
 use org\bovigo\vfs\vfsStream;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Yaml\Yaml;
+use Composer\Json\JsonFile;
 
 /**
  * @author Alwin Garside <alwin@garsi.de>
@@ -29,7 +30,7 @@ class YamlFileTest extends TestCase
      *
      * @return void
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->vfsRoot = vfsStream::setup();
     }
@@ -39,9 +40,9 @@ class YamlFileTest extends TestCase
      *
      * @throws \Exception
      */
-    public function testImportJsonFile()
+    public function testImportJsonFile(): void
     {
-        $jsonFile = $this->createMock('Composer\Json\JsonFile');
+        $jsonFile = $this->createMock(JsonFile::class);
         $jsonFile->expects(self::once())
             ->method('read')
             ->willReturn(array('foo' => 'bar'));
@@ -53,7 +54,7 @@ class YamlFileTest extends TestCase
     /**
      * @return void
      */
-    public function testEncode()
+    public function testEncode(): void
     {
         $data = array('foo' => 'bar');
 
@@ -66,7 +67,7 @@ class YamlFileTest extends TestCase
     /**
      * @return void
      */
-    public function testParseYaml()
+    public function testParseYaml(): void
     {
         $yaml = 'foo: "bar"';
 
@@ -82,7 +83,7 @@ class YamlFileTest extends TestCase
 //     * @return void
 //     * @throws \Exception
 //     */
-//    public function testWrite()
+//    public function testWrite(): void
 //    {
 //        // Test case: non-existing file.
 //        $yamlFile = new YamlFile("{$this->vfsRoot->url()}/test.yaml");

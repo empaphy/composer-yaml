@@ -5,6 +5,8 @@
  * @license   https://opensource.org/licenses/MIT MIT
  */
 
+declare(strict_types=1);
+
 namespace Empaphy\Composer;
 
 use Composer\Composer;
@@ -16,6 +18,7 @@ use Empaphy\Composer\Yaml\YamlFile;
 
 /**
  * @author Alwin Garside <alwin@garsi.de>
+ * @noinspection PhpUnused
  */
 class YamlPlugin implements PluginInterface
 {
@@ -32,7 +35,7 @@ class YamlPlugin implements PluginInterface
     /**
      * @return string
      */
-    public static function getComposerYamlFilename()
+    public static function getComposerYamlFilename(): string
     {
         return trim(getenv('COMPOSER')) ?: './composer.yaml';
     }
@@ -44,7 +47,7 @@ class YamlPlugin implements PluginInterface
      *
      * @throws \Exception
      */
-    public function activate(Composer $composer, IOInterface $io)
+    public function activate(Composer $composer, IOInterface $io): void
     {
         if (null === $this->yamlFile) {
             $this->yamlFile = new YamlFile(self::getComposerYamlFilename(), null, $io);
@@ -79,7 +82,7 @@ class YamlPlugin implements PluginInterface
      *
      * @throws \Exception
      */
-    public function deactivate(Composer $composer, IOInterface $io)
+    public function deactivate(Composer $composer, IOInterface $io): bool
     {
         $this->updateYamlWithJson();
 
@@ -94,7 +97,7 @@ class YamlPlugin implements PluginInterface
      * @param  \Composer\IO\IOInterface  $io
      * @return void
      */
-    public function uninstall(Composer $composer, IOInterface $io)
+    public function uninstall(Composer $composer, IOInterface $io): void
     {
         // ¯\_(ツ)_/¯
     }
@@ -104,7 +107,7 @@ class YamlPlugin implements PluginInterface
      *
      * @throws \Exception
      */
-    private function updateYamlWithJson()
+    private function updateYamlWithJson(): void
     {
         // If either of those is unset, no sense in comparing them.
         if (null !== $this->jsonFile && null !== $this->yamlFile) {

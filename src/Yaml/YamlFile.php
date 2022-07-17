@@ -7,6 +7,8 @@
  * @noinspection PhpInternalEntityUsedInspection
  */
 
+declare(strict_types=1);
+
 namespace Empaphy\Composer\Yaml;
 
 use Composer\Downloader\TransportException;
@@ -42,15 +44,15 @@ class YamlFile
     /**
      * Initializes json file reader/parser.
      *
-     * @param  string                           $path              Path to a YAML file.
-     * @param  \Composer\Util\RemoteFilesystem  $remoteFilesystem  Required for loading http/https yaml files.
-     * @param  \Composer\IO\IOInterface         $io
+     * @param  string                                $path              Path to a YAML file.
+     * @param  \Composer\Util\RemoteFilesystem|null  $remoteFilesystem  Required for loading http/https yaml files.
+     * @param  \Composer\IO\IOInterface|null         $io
      *
      * @throws \InvalidArgumentException                        If a RemoteFilesystem instance is needed but not passed.
      * @throws \RuntimeException                                If the config data couldn't be converted to JSON.
      * @throws \Symfony\Component\Yaml\Exception\ParseException If the file could not be read or the YAML is not valid.
      */
-    public function __construct($path, RemoteFilesystem $remoteFilesystem = null, IOInterface $io = null)
+    public function __construct(string $path, RemoteFilesystem $remoteFilesystem = null, IOInterface $io = null)
     {
         if (null === $remoteFilesystem && preg_match('{^https?://}i', $path)) {
             throw new InvalidArgumentException('http urls require a RemoteFilesystem instance to be passed');
@@ -67,7 +69,7 @@ class YamlFile
      *
      * @throws \Exception
      */
-    public function importJsonFile(JsonFile $jsonFile)
+    public function importJsonFile(JsonFile $jsonFile): void
     {
         $this->write($jsonFile->read());
     }
@@ -75,7 +77,7 @@ class YamlFile
     /**
      * @return string
      */
-    public function getPath()
+    public function getPath(): string
     {
         return $this->path;
     }
@@ -85,7 +87,7 @@ class YamlFile
      *
      * @return bool
      */
-    public function exists()
+    public function exists(): bool
     {
         return is_file($this->path);
     }
@@ -128,7 +130,7 @@ class YamlFile
      * @throws \InvalidArgumentException
      * @throws \UnexpectedValueException If target dir doesn't exist or is inaccessible.
      */
-    public function write(array $hash, $options = 0)
+    public function write(array $hash, int $options = 0): void
     {
         $dir = dirname($this->path);
 
@@ -166,7 +168,7 @@ class YamlFile
      *
      * @noinspection PhpReturnValueOfMethodIsNeverUsedInspection
      */
-    private function filePutContentsIfModified($path, $content)
+    private function filePutContentsIfModified(string $path, string $content)
     {
         $currentContent = @file_get_contents($path);
         if (! $currentContent || ($currentContent !== $content)) {
@@ -186,8 +188,9 @@ class YamlFile
      * @throws \Composer\Json\JsonValidationException  If the data does not match the expected JSON schema.
      * @throws \RuntimeException                       If the JSON encoding fails.
      * @throws \Seld\JsonLint\ParsingException
+     * @noinspection OneTimeUseVariablesInspection
      */
-    public function validateJsonSchema($schema = JsonFile::STRICT_SCHEMA, $schemaFile = null)
+    public function validateJsonSchema(int $schema = JsonFile::STRICT_SCHEMA, string $schemaFile = null): bool
     {
         $data = $this->read();
         $json = JsonFile::encode($data, 448);
@@ -206,7 +209,7 @@ class YamlFile
      * @param  int    $options  A bit field of DUMP_* constants to customize the dumped YAML string.
      * @return string Encoded YAML.
      */
-    public static function encode($data, $options = 0)
+    public static function encode($data, int $options = 0): string
     {
         return Yaml::dump($data, 2, 4, $options);
     }
@@ -219,7 +222,7 @@ class YamlFile
      *
      * @throws \Symfony\Component\Yaml\Exception\ParseException
      */
-    public static function parseYaml($yaml)
+    public static function parseYaml(?string $yaml)
     {
         if (null === $yaml) {
             return null;
