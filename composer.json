@@ -1,7 +1,7 @@
 {
     "name":        "empaphy/composer-yaml",
     "type":        "composer-plugin",
-    "description": "composer.yaml support for Composer.",
+    "description": "composer.yaml support for Composer",
     "license":     "MIT",
     "keywords":    ["composer", "yaml", "plugin", "composer.yaml", "composer.yml"],
 
