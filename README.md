@@ -44,6 +44,7 @@ example, if you take a typical composer.json like this:
         "symfony/filesystem":     "~5.4.0",
         "symfony/process":        "~5.4.0",
         "symfony/yaml":           "~5.4.0",
+
         "yogarine/composer-yaml": "~5.4.0"
     },
 
@@ -74,7 +75,7 @@ example, if you take a typical composer.json like this:
 You can turn it into something like this:
 ```yaml
 ##
-# Composer configuration for the Foo package.
+# Example Composer configuration for the Foo package.
 #
 # Use composer to install dependencies for this package:
 #
@@ -99,14 +100,14 @@ prefer-stable: true
 #
 # The package will not be installed unless those requirements can be met.
 require:
-    php:                    '>=7.4'  # We depend on property types. 
+    php: '>=7.4'  # We depend on property types. 
 
     # Symfony dependencies:
-    symfony/config:         &symfony-version '~5.4.0'
-    symfony/console:        *symfony-version
-    symfony/filesystem:     *symfony-version
-    symfony/process:        *symfony-version
-    symfony/yaml:           *symfony-version
+    symfony/config:     &symfony-version '~5.4.0'
+    symfony/console:    *symfony-version
+    symfony/filesystem: *symfony-version
+    symfony/process:    *symfony-version
+    symfony/yaml:       *symfony-version
 
     yogarine/composer-yaml: 'dev-main'  # Adds support for this file. :-)
 
@@ -135,10 +136,15 @@ scripts:
 ```
 
 As you can see, YAML allows for a lot more expressive Composer configuration.
-  - Comments allow you to clarify your configuration.
-  - Not needing to use quotes makes the file much more readable.
-  - Not requiring trailing comma's reduces the chance at syntax errors.
-  - 
+
+  - **Comments** allow you to clarify your configuration.
+  - **Quotes** are **not required**, which makes the file much more readable.
+  - **No trailing commas** are required, which reduces the risk of syntax
+    errors.
+  - Support for **[multiline strings](https://yaml-multiline.info)** allows you
+    to split string over multiple rows. YAML allows you to fold or retain
+    newlines in multiline strings.
+  - **YAML anchors** let you reference and use the same data multiple times.
 
 ## Known Issues / Roadmap
 
