@@ -1,34 +1,47 @@
 {
-    "name": "empaphy/composer-yaml",
-    "type": "composer-plugin",
-    "description": "composer.yaml support for composer.",
-    "license": "MIT",
-    "keywords": ["composer", "yaml", "composer.yaml", "composer.yml"],
+    "name":        "empaphy/composer-yaml",
+    "type":        "composer-plugin",
+    "description": "composer.yaml support for Composer.",
+    "license":     "MIT",
+    "keywords":    ["composer", "yaml", "plugin", "composer.yaml", "composer.yml"],
+
     "authors": [
         {
-            "name": "Alwin Garside",
-            "email": "alwin@garsi.de"
+            "name":     "Alwin Garside",
+            "email":    "alwin@garsi.de",
+            "homepage": "https://www.yogarine.com"
         }
     ],
+
+    "support": {
+        "issues": "https://github.com/empaphy/composer-yaml/issues",
+        "wiki":   "https://github.com/empaphy/composer-yaml/wiki",
+        "source": "https://github.com/empaphy/composer-yaml/tree/main"
+    },
+
     "require": {
         "php": ">=7.2.5",
         "ext-json": "*",
         "composer-plugin-api": ">=1.0",
         "symfony/yaml": ">=2.0"
     },
+
     "require-dev": {
         "composer/composer": ">=1.0",
         "mikey179/vfsstream": "^1.0",
         "phpunit/phpunit": ">=8.0"
     },
+
     "autoload": {
         "psr-4": {
             "Empaphy\\Composer\\": "src/"
         }
     },
+
+    "minimum-stability": "dev",
+    "prefer-stable":     true,
+
     "extra": {
         "class": "Empaphy\\Composer\\YamlPlugin"
-    },
-    "prefer-stable": true,
-    "minimum-stability": "dev"
+    }
 }
