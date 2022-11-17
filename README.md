@@ -9,11 +9,13 @@ things) however it is now generated automatically when a change in
 `composer.yaml` is detected. Think of this similarly to how `composer.lock` 
 is generated.
 
+
 ## Installation
 
 ```bash
-composer require "empaphy/composer-yaml:^1.0@dev"
+composer require "empaphy/composer-yaml:^1.0"
 ```
+
 
 ## Usage
 
@@ -24,10 +26,30 @@ your existing composer.json.
 Just remember to modify composer.yaml from now on, and to _not_ modify
 composer.json, since any changes in that file will be overridden.
 
+
+## Why YAML? What's wrong with JSON?
+
+JSON was never designed to be a human-readable format. It's intended use is for
+computers to exchange information with one another. Hence, it misses essential
+features which one would need from a file that is manipulated by humans, like
+comments.
+
+YAML allows for comments and a lot more, making expressive Composer
+configuration possible.
+
+- **Comments** allow you to clarify your configuration.
+- **Quotes** are **not required**, which makes the file much more readable.
+- **No trailing commas** are required, which reduces the risk of syntax
+  errors.
+- Support for **[multiline strings](https://yaml-multiline.info)** allows you
+  to split string over multiple rows. YAML allows you to fold or retain
+  newlines in multiline strings.
+- **YAML anchors** let you reference and use the same data multiple times.
+
+
 ### YAML vs JSON
 
-YAML allows for many features not available in JSON, like... Comments! For 
-example, if you take a typical composer.json like this:
+For example, if you take a typical composer.json like this:
 ```json
 {
     "name":              "empaphy/foo",
@@ -135,16 +157,6 @@ scripts:
         fi
 ```
 
-As you can see, YAML allows for a lot more expressive Composer configuration.
-
-  - **Comments** allow you to clarify your configuration.
-  - **Quotes** are **not required**, which makes the file much more readable.
-  - **No trailing commas** are required, which reduces the risk of syntax
-    errors.
-  - Support for **[multiline strings](https://yaml-multiline.info)** allows you
-    to split string over multiple rows. YAML allows you to fold or retain
-    newlines in multiline strings.
-  - **YAML anchors** let you reference and use the same data multiple times.
 
 ## Known Issues / Roadmap
 
@@ -158,3 +170,12 @@ As you can see, YAML allows for a lot more expressive Composer configuration.
     using the CLI commands to modify the composer config. I mean, why even
     would you, when you can now use fancy YAML markup to pimp up your
     composer.yaml? ;-)
+
+  - **Handle first-time install of a composer.yaml project properly.**
+    Especially in the edge case where composer.yaml was modified, but
+    composer-yaml has not yet been installed.
+
+  - **Warn about changes made to composer.json**
+
+  - **Add config option to choose default behaviours**, for example for
+    overwriting an existing YAML file.
