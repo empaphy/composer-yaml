@@ -2,7 +2,7 @@
 <phpunit>
     <testsuites>
         <testsuite name="composer-yaml Test Suite">
-            <directory suffix="Test.php" phpVersion="5.3.2">./tests</directory>
+            <directory suffix="Test.php" phpVersion="7.2">./tests/unit</directory>
         </testsuite>
     </testsuites>
 </phpunit>

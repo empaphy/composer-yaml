@@ -38,8 +38,18 @@
         }
     },
 
+    "autoload-dev": {
+        "psr-4": {
+            "Empaphy\\Composer\\Test\\": "tests/unit"
+        }
+    },
+
     "minimum-stability": "stable",
     "prefer-stable":     true,
+
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
 
     "extra": {
         "class": "Empaphy\\Composer\\YamlPlugin"
