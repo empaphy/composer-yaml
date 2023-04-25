@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Integration Test: Symfony 6" type="PhpLocalRunConfigurationType" factoryName="PHP Console" path="$PROJECT_DIR$/vendor/bin/composer" scriptParameters="update -v">
+    <CommandLine workingDirectory="$PROJECT_DIR$/tests/integration/symfony-6">
+      <envs>
+        <env name="COMPOSER_ALLOW_XDEBUG" value="1" />
+        <env name="COMPOSER_DEBUG_EVENTS" value="1" />
+      </envs>
+    </CommandLine>
+    <method v="2" />
+  </configuration>
+</component>

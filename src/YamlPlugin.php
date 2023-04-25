@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @copyright 2022 Alwin Garside
+ * @copyright 2023 Alwin Garside
  * @license   https://opensource.org/licenses/MIT MIT
  */
 
@@ -14,11 +14,11 @@ use Composer\Factory;
 use Composer\IO\IOInterface;
 use Composer\Json\JsonFile;
 use Composer\Plugin\PluginInterface;
+use Composer\Util\Platform;
 use Empaphy\Composer\Yaml\YamlFile;
 
 /**
  * @author Alwin Garside <alwin@garsi.de>
- * @noinspection PhpUnused
  */
 class YamlPlugin implements PluginInterface
 {
@@ -33,11 +33,14 @@ class YamlPlugin implements PluginInterface
     protected $jsonFile;
 
     /**
+     * @param  string  $composerJsonFilename
      * @return string
      */
-    public static function getComposerYamlFilename(): string
+    public static function getYamlFilename(string $composerJsonFilename): string
     {
-        return trim((string) getenv('COMPOSER')) ?: './composer.yaml';
+        $pathinfo = pathinfo($composerJsonFilename);
+
+        return "{$pathinfo['dirname']}/{$pathinfo['filename']}.yaml";
     }
 
     /**
@@ -49,24 +52,32 @@ class YamlPlugin implements PluginInterface
      */
     public function activate(Composer $composer, IOInterface $io): void
     {
-        if (null === $this->yamlFile) {
-            $this->yamlFile = new YamlFile(self::getComposerYamlFilename(), null, $io);
-        }
+        $config     = $composer->getConfig();
+        $configPath = $config->getSourceOfValue('allow-plugins.empaphy/composer-yaml');
 
         if (null === $this->jsonFile) {
-            $this->jsonFile = new JsonFile(Factory::getComposerFile(), null, $io);
+            $this->jsonFile = new JsonFile($configPath, null, $io);
+        }
+
+        if (null === $this->yamlFile) {
+            $this->yamlFile = new YamlFile(self::getYamlFilename($configPath), null, $io);
         }
 
         // If no YAML file currently exist, generate it based on the current JSON file.
         if (! $this->yamlFile->exists()) {
+            $io->writeError("Generating new composer.yaml file from JSON", true, IOInterface::VERBOSE);
             $this->yamlFile->importJsonFile($this->jsonFile);
         }
 
         // Always regenerate the JSON file based on the YAML file.
+        $io->writeError("Writing composer.json file", true, IOInterface::VERBOSE);
         $this->jsonFile->write($this->yamlFile->read());
 
         // Reinitialize the config so the new JSON file is loaded.
-        $newComposer = Factory::create($io, $this->jsonFile->getPath(), true);
+        $factory     = new Factory();
+        $newComposer = $factory->createComposer($io, $configPath, true, Platform::getCwd(true));
+
+        $io->writeError("Reinitializing Composer config", true, IOInterface::VERBOSE);
 
         $composer->setConfig($newComposer->getConfig());
         $composer->setPackage($newComposer->getPackage());
