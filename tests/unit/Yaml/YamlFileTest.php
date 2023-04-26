@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * @copyright 2022 Alwin Garside
  * @license https://opensource.org/licenses/MIT MIT
