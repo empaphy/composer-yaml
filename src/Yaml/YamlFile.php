@@ -42,9 +42,9 @@ class YamlFile
     /**
      * Initializes json file reader/parser.
      *
-     * @param  string                           $path              Path to a YAML file.
-     * @param  \Composer\Util\RemoteFilesystem  $remoteFilesystem  Required for loading http/https yaml files.
-     * @param  \Composer\IO\IOInterface         $io
+     * @param  string                                $path              Path to a YAML file.
+     * @param  \Composer\Util\RemoteFilesystem|null  $remoteFilesystem  Required for loading http/https yaml files.
+     * @param  \Composer\IO\IOInterface|null         $io
      *
      * @throws \InvalidArgumentException                        If a RemoteFilesystem instance is needed but not passed.
      * @throws \RuntimeException                                If the config data couldn't be converted to JSON.
