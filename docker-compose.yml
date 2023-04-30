@@ -1,0 +1,31 @@
+services:
+  php7.2:
+    image: empaphy/php:7.2-composer
+    build:
+      context: docker
+      args: { PHP_VERSION: "7.2" }
+    volumes:
+      - { type: volume, source: home,                   target: /var/www }
+      - { type: bind,   source: .,                      target: /var/www/html }
+      - { type: bind,   source: "${HOME:-.}/.composer", target: /var/www/.composer,   bind: { create_host_path: true } }
+      - { type: volume, source: php7.2-vendor,          target: /var/www/html/vendor }
+    user: www-data
+    working_dir: /var/www/html
+
+  php8.1:
+    image: empaphy/php:8.1-composer
+    build:
+      context: docker
+      args: { PHP_VERSION: "8.1" }
+    volumes:
+      - { type: volume, source: home,                   target: /var/www }
+      - { type: bind,   source: .,                      target: /var/www/html }
+      - { type: bind,   source: "${HOME:-.}/.composer", target: /var/www/.composer,   bind: { create_host_path: true } }
+      - { type: volume, source: php8.1-vendor,          target: /var/www/html/vendor }
+    user: www-data
+    working_dir: /var/www/html
+
+volumes:
+  home:
+  php7.2-vendor:
+  php8.1-vendor:
